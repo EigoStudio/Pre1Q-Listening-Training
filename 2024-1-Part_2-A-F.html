@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>英検準1級 Listening Activity (Part 2 A〜F)</title>
+<script src="auth.js"></script>
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 640px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 16px 20px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      background: #eff6ff;
+      color: var(--primary);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+
+    .btn-back:hover {
+      color: var(--primary);
+    }
+
+    .view {
+      padding: 24px 20px;
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .menu-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .topic-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .topic-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+    }
+
+    .topic-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topic-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .topic-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .topic-count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .quiz-status {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .audio-card {
+      background: #f8fafc;
+      border: 1px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .audio-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .audio-btn:hover {
+      background: var(--primary-hover);
+      transform: scale(1.05);
+    }
+
+    .audio-btn:active {
+      transform: scale(0.95);
+    }
+
+    .audio-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .btn-show-options {
+      width: 100%;
+      padding: 12px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      margin-bottom: 20px;
+    }
+
+    .btn-show-options:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .option-btn {
+      width: 100%;
+      padding: 12px 16px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+    }
+
+    .option-btn:hover {
+      border-color: var(--primary);
+      background: #f0f7ff;
+    }
+
+    .option-btn.correct {
+      border-color: var(--success);
+      background: #ecfdf5;
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background: #fef2f2;
+      color: #991b1b;
+      opacity: 0.7;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .script-box {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .script-box.active {
+      display: block;
+    }
+
+    .script-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .script-text-en {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .script-text-ja {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .next-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+      transition: background 0.2s;
+    }
+
+    .next-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .next-btn.active {
+      display: block;
+    }
+
+    .summary-card {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #eff6ff;
+      color: var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      border: 3px solid var(--primary);
+    }
+
+    .score-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .score-total {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .summary-msg {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .summary-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      flex: 1;
+      padding: 10px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <header>
+      <div class="header-title">
+        <span>英検準1級 Listening Activity</span>
+        <span class="badge">Part 2 全文網羅</span>
+      </div>
+      <button id="btnBackHome" class="btn-back" style="display: none;">
+        <i class="fa-solid fa-house"></i> トップ
+      </button>
+    </header>
+
+    <!-- MENU VIEW -->
+    <div id="viewMenu" class="view active">
+      <p class="menu-desc">苦手なパッセージを選んでトレーニングが行えます。<br>1文ずつしっかり聞き取って正解の和訳を選びましょう。</p>
+      
+      <div class="topic-grid">
+        <button class="topic-btn" onclick="startQuiz('A')">
+          <div class="topic-info">
+            <div class="topic-letter">A</div>
+            <div>
+              <div class="topic-name">Locust Swarms</div>
+              <div class="topic-count" id="count-A">問題数: -</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+        </button>
+
+        <button class="topic-btn" onclick="startQuiz('B')">
+          <div class="topic-info">
+            <div class="topic-letter">B</div>
+            <div>
+              <div class="topic-name">Golden-Shouldered Parrots</div>
+              <div class="topic-count" id="count-B">問題数: -</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+        </button>
+
+        <button class="topic-btn" onclick="startQuiz('C')">
+          <div class="topic-info">
+            <div class="topic-letter">C</div>
+            <div>
+              <div class="topic-name">Astronaut Efficiency</div>
+              <div class="topic-count" id="count-C">問題数: -</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+        </button>
+
+        <button class="topic-btn" onclick="startQuiz('D')">
+          <div class="topic-info">
+            <div class="topic-letter">D</div>
+            <div>
+              <div class="topic-name">The Oxus Civilization</div>
+              <div class="topic-count" id="count-D">問題数: -</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+        </button>
+
+        <button class="topic-btn" onclick="startQuiz('E')">
+          <div class="topic-info">
+            <div class="topic-letter">E</div>
+            <div>
+              <div class="topic-name">The Nukus Museum of Art</div>
+              <div class="topic-count" id="count-E">問題数: -</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+        </button>
+
+        <button class="topic-btn" onclick="startQuiz('F')">
+          <div class="topic-info">
+            <div class="topic-letter">F</div>
+            <div>
+              <div class="topic-name">Cutting Grass</div>
+              <div class="topic-count" id="count-F">問題数: -</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- QUIZ VIEW -->
+    <div id="viewQuiz" class="view">
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="quiz-status">
+        <span id="topicIndicator">Activity A</span>
+        <span id="questionCounter">Q 1 / 5</span>
+      </div>
+
+      <div class="audio-card">
+        <button class="audio-btn" id="btnPlayAudio" onclick="playCurrentAudio()">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <span class="audio-label">タップして音声を聞く</span>
+      </div>
+
+      <button class="btn-show-options" id="btnShowOptions" onclick="revealOptions()">
+        <i class="fa-regular fa-eye"></i> 選択肢を表示する
+      </button>
+
+      <div class="options-container" id="optionsContainer" style="display: none;"></div>
+
+      <div class="script-box" id="scriptBox">
+        <div class="script-header">英文スクリプト & 正解和訳</div>
+        <div class="script-text-en" id="scriptEn"></div>
+        <div class="script-text-ja" id="scriptJa"></div>
+      </div>
+
+      <button class="next-btn" id="btnNext" onclick="nextQuestion()">次の問題へ</button>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div id="viewResult" class="view">
+      <div class="summary-card">
+        <div class="score-circle">
+          <div class="score-num" id="finalScore">0</div>
+          <div class="score-total" id="finalTotal">/ 0</div>
+        </div>
+        <div class="summary-msg" id="summaryTitle">おつかれさまでした！</div>
+        <div class="summary-sub" id="summarySub">繰り返し練習してリスニング力を高めましょう。</div>
+
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="showMenu()">一覧へ戻る</button>
+          <button class="btn-primary" onclick="retryCurrentQuiz()">もう一度挑戦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* 添付スクリプト(Part2 A〜F)の全文完全網羅データ */
+    const quizData = {
+      'A': {
+        title: 'Locust Swarms',
+        questions: [
+          {
+            en: "Swarms of grasshoppers known as locusts have been notorious throughout history for completely destroying crops.",
+            options: [
+              "イナゴと呼ばれるバッタの大群は、歴史を通じて作物を完全に破壊することで悪名高かった。",
+              "バッタの大群は特定の季節になると大量発生し、人々に害を与えてきた。",
+              "古代からバッタは貴重なタンパク源として珍重されてきた経緯がある。",
+              "バッタの被害は一部の地域に限られており、歴史的にはそれほど重視されてこなかった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "In a single day, a relatively small group of these insects can eat through enough food to feed tens of thousands of people.",
+            options: [
+              "ほんの1日で、これらの昆虫の比較的小さなグループであっても、何万人もの人々を養うのに十分な量の食料を食べ尽くしてしまうことがある。",
+              "1週間もあれば、バッタの群れは村全体の農作物を全て壊滅させることができる。",
+              "バッタは一日に自分の体重の何十倍もの水分を摂取することが知られている。",
+              "小規模なバッタの群れであれば、1日程度の対策で十分に駆除することが可能である。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Despite attempts to control them with pesticides, locusts travel and reproduce quickly and are unpredictable in their movements, so success has been limited.",
+            options: [
+              "農薬で彼らを抑え込もうとする試みにもかかわらず、バッタは移動や繁殖が速く、動きも予測不能であるため、成果は限定的であった。",
+              "農薬の使用により一時的にバッタの数を減らすことには成功したが、コストの問題が残された。",
+              "バッタは農薬に対する抗体を急速に獲得するため、従来の化学薬品は全く効果がない。",
+              "バッタの移動ルートは風向きによって容易に予測できるため、対策は容易である。"
+            ],
+            answer: 0
+          },
+          {
+            en: "However, locusts are known to even eat each other, and scientists see promise in exploiting this tendency.",
+            options: [
+              "しかし、バッタは共食いさえすることが知られており、科学者たちはこの習性を利用することに望みを見出している。",
+              "しかし、バッタは天敵に対して非常に弱いため、天敵を導入する計画が進められている。",
+              "しかし、バッタ同士がお互いを攻撃し合う習性は繁殖期にしか見られない。",
+              "科学者たちは、バッタが特定の植物を避ける習性を利用して農作物を守ろうとしている。"
+            ],
+            answer: 0
+          },
+          {
+            en: "As locust swarms develop, the insects emit a chemical that makes them less likely to eat one another.",
+            options: [
+              "バッタの群れが大きくなるにつれて、昆虫たちはお互いを共食いしにくくする化学物質を放出する。",
+              "群れが拡大すると、バッタは互いに連絡を取り合うための特殊なフェロモンを発する。",
+              "バッタの群れが成熟すると、共食いの頻度が急激に増加して群れが崩壊する。",
+              "バッタは外敵から身を守るために、強い臭いを放つ化学物質を分泌する。"
+            ],
+            answer: 0
+          },
+          {
+            en: "This enables the group to grow without destroying itself.",
+            options: [
+              "これにより、群れは自滅することなく拡大することができる。",
+              "この物質のおかげで、バッタは狭い空間でもストレスなく生息できる。",
+              "これによって、バッタは長距離の飛翔に必要なエネルギーを維持している。",
+              "この仕組みにより、共食いによる群れの減少を完全に防ぐことができる。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Researchers experimented by editing locust DNA.",
+            options: [
+              "研究者たちはバッタのDNAを編集することによって実験を行った。",
+              "研究者たちはバッタのゲノム解析を完了させ、新たな農薬を開発した。",
+              "研究者たちはバッタの遺伝子を組み換えて、飛翔能力を奪う実験に成功した。",
+              "研究者たちは自然界のバッタのDNAを採取して変異の過程を調査した。"
+            ],
+            answer: 0
+          },
+          {
+            en: "When locusts were created without the ability to smell this chemical, their likelihood of consuming other locusts increased.",
+            options: [
+              "この化学物質の臭いをかぎ分ける能力を持たないバッタを作り出したところ、他のバッタを食べる確率が高まった。",
+              "この化学物質を察知できないバッタは、群れから離脱して単独行動をとるようになった。",
+              "臭いを感じ取れないバッタは繁殖能力が低下し、世代交代が止まることが確認された。",
+              "バッタの嗅覚を遮断すると、作物を食べる量が劇的に減少することが判明した。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Similarly, locusts that were engineered not to produce the chemical were more likely to become another's meal.",
+            options: [
+              "同様に、その化学物質を生成しないように遺伝子操作されたバッタは、他のバッタの餌食になりやすくなった。",
+              "同じように、化学物質を作れないバッタは他の個体を攻撃する頻度が高くなった。",
+              "化学物質を分泌しないバッタは、集団の中で優先的に保護される傾向が見られた。",
+              "遺伝子操作によって化学物質を失ったバッタは、急速に体力を失って死滅した。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Scientists hope these techniques can reduce or eliminate destructive locusts someday.",
+            options: [
+              "科学者たちは、これらの技術がいつの日か破壊的なバッタを減少させるか、消滅させることができると期待している。",
+              "科学者たちは、この技術を用いて農作物の品質を改善できると考えている。",
+              "この手法を応用することで、他の害虫駆除にも革命が起きると予想されている。",
+              "研究者たちは、数年以内にこの遺伝子技術の実用化を目指して実験を重ねている。"
+            ],
+            answer: 0
+          }
+        ]
+      },
+      'B': {
+        title: 'Golden-Shouldered Parrots',
+        questions: [
+          {
+            en: "Golden-shouldered parrots once inhabited northern Australia in large numbers, but today, only two small populations remain.",
+            options: [
+              "ヒノマルインコ（Golden-shouldered parrot）はかつてオーストラリア北部に多数生息していたが、今日ではわずか2つの小さな集団が残るのみである。",
+              "ヒノマルインコはオーストラリア全域に広く分布していたが、今では北部の沿岸部にしか見られない。",
+              "かつてオーストラリア北部に生息していたヒノマルインコは、絶滅の危機を乗り越えて数が回復しつつある。",
+              "ヒノマルインコは本来、小さな島々に孤立して生息する珍しい種類のインコであった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "While invasive predators are often to blame when Australian animals become endangered, the parrots face a different threat—native tea trees.",
+            options: [
+              "オーストラリアの動物が絶滅危惧種になる場合、外来種の捕食者が原因とされることが多いが、このインコは別の脅威、つまり在来種のティーツリーに直面している。",
+              "外来種の捕食者がインコのヒナを襲うことが、個体数減少の最大の原因として挙げられている。",
+              "インコは気候変動による主食の種子の減少という、予期せぬ脅威に直面している。",
+              "在来種のティーツリーが急増した背景には、外来種の動物が種子を運んだことがある。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The trees grow in the parrots' grassland habitat, where they block the birds' view of approaching predators.",
+            options: [
+              "その木々はインコの生息地である草地に生育し、近づいてくる捕食者を見通す鳥たちの視界を遮ってしまう。",
+              "木々が密生することによって、インコが巣を作るのに適した枯れ木が減ってしまっている。",
+              "ティーツリーの毒性がインコの主食となる草の成長を妨げていることがわかった。",
+              "木々が大きくなりすぎると、インコが飛翔する際のお互いの接触事故が増加する。"
+            ],
+            answer: 0
+          },
+          {
+            en: "By the time the parrots notice the attack, it is often too late for them to escape.",
+            options: [
+              "インコが攻撃に気づいたときには、脱出するにはすでに遅すぎることが多い。",
+              "捕食者が近づいても、インコは木の枝に隠れてやり過ごすことができない。",
+              "襲撃を察知したインコは、群れ全体に警告を発する前に捕食されてしまう。",
+              "視界が遮られることで、インコは自分のヒナの場所を見失ってしまうことがある。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The tea trees' growth is the result of cattle farms, which increased throughout the 1900s and forced indigenous peoples off their lands.",
+            options: [
+              "ティーツリーの生長は、1900年代を通じて増加し先住民族を土地から追い出した牛の牧場の結果である。",
+              "ティーツリーの増加は、地球温暖化によって降水量が増加したことが主な原因である。",
+              "先住民族が牧場経営を始めたことで、草地が急激に森林へと変化していった。",
+              "牛の放牧が減少したことで草が伸び放題になり、ティーツリーの種が発芽しやすくなった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "These peoples had managed the grasslands, and the shade provided by the grasses prevented tea-tree growth.",
+            options: [
+              "これらの人々（先住民族）は草地を管理しており、草が作る日陰がティーツリーの生育を防いでいた。",
+              "先住民族は定期的に放火することでティーツリーの苗木を焼き払っていた。",
+              "彼らはティーツリーを薬草として利用するために、適度な数に制限して栽培していた。",
+              "背の高い背丈の草が生い茂ることで、ティーツリーの種子が地表に届くのを防いでいた。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The loss of this land management, along with the cattle's consumption of grass, allowed the trees to spread.",
+            options: [
+              "この土地管理の喪失と、牛による草の消費が相まって、木々が広がることを許してしまった。",
+              "牛がティーツリーの果実を食べることで、種子が広範囲にフンとともに拡散した。",
+              "土地管理が行われなくなった結果、大規模な山火事が頻発して森林化が進んだ。",
+              "牧場主たちが日陰を作るために意図的にティーツリーを植樹したことが裏目に出た。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Efforts to clear the trees are underway, but obtaining government approval to destroy native vegetation can be difficult and time-consuming.",
+            options: [
+              "木々を伐採する努力が進められているが、在来植物を破壊するための政府の承認を得ることは難しく、時間がかかる場合がある。",
+              "木々を伐採するための資金が不足しており、民間からの寄付に頼っているのが現状である。",
+              "在来の植物を保護するための法律が厳しすぎるため、インコの保護活動自体が違法とみなされている。",
+              "伐採作業によってインコの巣が破壊されるリスクがあるため、作業は難航している。"
+            ],
+            answer: 0
+          },
+          {
+            en: "For now, the parrots' future remains uncertain.",
+            options: [
+              "今のところ、インコたちの未来は不確定なままである。",
+              "インコを別の無人島へ移住させる計画が最終段階に入っている。",
+              "政府の迅速な対応により、インコの数は来年にもV字回復すると期待されている。",
+              "ボランティアの尽力により、インコの保護区の拡大が決定した。"
+            ],
+            answer: 0
+          }
+        ]
+      },
+      'C': {
+        title: 'Astronaut Efficiency',
+        questions: [
+          {
+            en: "Recently, establishing a colony on Mars has been considered by some as a near-future goal for humanity.",
+            options: [
+              "最近では、火星に植民地を建設することが人類の近い将来の目標として一部の人々に考えられている。",
+              "火星への移住計画は、技術的な限界から実現不可能であると結論づけられた。",
+              "かつて火星基地の建設は夢物語とされていたが、すでに着工段階に入っている。",
+              "民間企業主導による火星観光旅行が、あと数年で実用化される見込みである。"
+            ],
+            answer: 0
+          },
+          {
+            en: "However, there are many major hurdles to such a task.",
+            options: [
+              "しかしながら、そのような事業には多くの大きな障害が存在する。",
+              "だが、各国政府からの資金援助が途絶えてしまう恐れがある。",
+              "しかし、火星の過酷な気候に耐えられる宇宙飛行士の確保が難しい。",
+              "もっとも、国際宇宙ステーションの維持費用に比べれば大した問題ではない。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Aside from the technical innovations required to build a sustainable habitat, such a long journey by spacecraft itself raises serious problems.",
+            options: [
+              "持続可能な住居を建設するために必要な技術革新は別として、宇宙船によるこれほどの長旅自体が重大な問題を引き起こす。",
+              "宇宙放射線から身を守る技術の開発が遅れており、人類の火星到達は危険視されている。",
+              "火星の土壌から水や酸素を抽出する技術はすでに確立されているが、輸送コストが課題だ。",
+              "長期間の孤立生活による宇宙飛行士の精神的ストレスをいかに軽減するかが唯一の課題である。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Much equipment would be necessary, but it can currently cost tens of thousands of dollars to lift a single kilogram into space.",
+            options: [
+              "多くの装備が必要となるだろうが、現在、わずか1キログラムを宇宙に打ち上げるだけで数万ドルの費用がかかる可能性がある。",
+              "大量の資材を運ぶためには、より大型のロケットを開発しなければならない。",
+              "宇宙船の重量を減らすために、最先端の軽量素材がすでに導入されている。",
+              "1キロあたりの輸送コストは年々低下しているものの、依然として高額である。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The European Space Agency published a study suggesting a way to maximize efficiency.",
+            options: [
+              "欧州宇宙機関（ESA）は、効率を最大化する方法を提案する研究成果を発表した。",
+              "欧州宇宙機関は、ロケット燃料のコストを大幅に削減する新型エンジンを発表した。",
+              "ESAの研究者は、宇宙船内での食料生産システムに関するレポートを公開した。",
+              "欧州の宇宙機関は、民間の宇宙飛行士を積極的に採用する新方針を示した。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Based on its calculations, all-female crews may be much more efficient.",
+            options: [
+              "その試算に基づくと、全員女性の乗組員の方がはるかに効率的である可能性がある。",
+              "計算によると、乗組員の人数を従来の半分に減らすことが最も効率的とされる。",
+              "データ分析の結果、若手の宇宙飛行士のみでチームを編成するのがベストとされた。",
+              "試算によれば、宇宙船の自動化を進めることで乗組員の負担を最小限に抑えられる。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Due to their smaller average size, a four-female crew would need about 1,700 kilograms less food than men for a 1,080-day mission, saving $158 million.",
+            options: [
+              "平均的な体格が小さいため、4人の女性乗組員は1,080日間のミッションで男性よりも約1,700キログラム少ない食料で済み、1億5,800万ドルを節約できる。",
+              "女性の方が基礎代謝が高いため、同じ量の食料でより長期間活動することが可能である。",
+              "4人の女性チームは男性チームに比べてカロリー消費が多いため、特別な栄養補給が必要となる。",
+              "体格が小柄な乗組員を選ぶことで、宇宙船の居住スペースを3割削減することができる。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Additionally, smaller bodies use less energy, so they consume less water and oxygen and produce less carbon dioxide.",
+            options: [
+              "さらに、体が小さいほど使うエネルギーが少ないため、消費する水や酸素が少なく、排出する二酸化炭素も少なくなる。",
+              "また、女性はストレス耐性が高いため、狭い船内環境でも二酸化炭素の排出を抑えられる。",
+              "小柄な体格であればリサイクル装置の負荷が減り、機器の故障率が低下する。",
+              "エネルギー消費が少ないため、船内の空調設備を大幅に簡略化することが可能となる。"
+            ],
+            answer: 0
+          },
+          {
+            en: "On long missions, seemingly small differences could result in big advantages.",
+            options: [
+              "長期間のミッションでは、一見小さく思える違いが大きなアドバンテージにつながる可能性がある。",
+              "長旅においては、宇宙飛行士同士の相性の方が物理的なアドバンテージよりも重要だ。",
+              "小さなコスト削減を積み重ねるよりも、ロケット自体の性能を上げる方が効果的だ。",
+              "このようなわずかな差は、実際の運用においては誤差の範囲内に過ぎないと指摘する声もある。"
+            ],
+            answer: 0
+          }
+        ]
+      },
+      'D': {
+        title: 'The Oxus Civilization',
+        questions: [
+          {
+            en: "The Oxus civilization was a Bronze Age society located in Central Asia.",
+            options: [
+              "オクサス文明は、中央アジアに位置していた青銅器時代の社会であった。",
+              "オクサス文明はメソポタミア地方で発展した古代の巨大帝国であった。",
+              "オクサス文明は鉄器時代初期に突如として現れた高度な都市文明である。",
+              "オクサス文明は青銅器時代から鉄器時代にかけて長期にわたり繁栄した。"
+            ],
+            answer: 0
+          },
+          {
+            en: "However, despite several archaeological sites being discovered that contain structures and various artifacts, compared to many other Bronze Age civilizations, much remains unknown about it.",
+            options: [
+              "しかし、建造物やさまざまな遺物を含むいくつかの考古学遺跡が発見されているにもかかわらず、他の多くの青銅器文明と比較して、それについては未だ多くの謎が残されている。",
+              "しかし、文字資料が全く残されていないため、遺跡の発掘が進んでも歴史の全貌は解明されていない。",
+              "遺跡の保存状態が劣悪であったため、当時の人々の生活様式を復元することは不可能な状況だ。",
+              "他の青銅器文明と比べて規模が極めて小さかったため、歴史研究者の関心を引いてこなかった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Scholars are not even sure how far the civilization extended.",
+            options: [
+              "学者たちは、その文明がどこまで広がっていたのかさえ確信を持てていない。",
+              "研究者たちは、その文明がいつ頃始まったのかについて意見が一致していない。",
+              "学者たちは、オクサス文明が独自の言語を持っていたかどうかすら分かっていない。",
+              "専門家たちは、その文明が隣国と交易を行っていたかどうか疑問視している。"
+            ],
+            answer: 0
+          },
+          {
+            en: "They are determined to learn more about the ancient society, though, and recent research has produced various theories about its history.",
+            options: [
+              "それでも彼らはこの古代社会についてもっと知ろうと決意しており、最近の研究によりその歴史に関するさまざまな仮説が生み出されている。",
+              "発掘調査の予算が不足しているものの、若手研究者たちの情熱によって新たな事実が次々と発掘されている。",
+              "歴史学者たちは新たな出土品を分析することで、従来の定説を完全に覆すことに成功した。",
+              "研究チームは周辺諸国と協力して、近隣の未調査地域での大規模な発掘を開始した。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Artifacts uncovered by archaeologists suggest that the society underwent major changes before vanishing.",
+            options: [
+              "考古学者によって発掘された遺物は、その社会が消滅する前に大きな変化を経験したことを示唆している。",
+              "出土した土器の様式から、外部からの激しい侵略によって突然滅亡したことが窺える。",
+              "発掘された遺物は、その社会が崩壊の直前まで非常に平和で安定的であったことを示している。",
+              "考古学的な証拠は、環境破壊によって徐々に人口が減少していった過程を物語っている。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Objects that indicated social status seemed to have stopped being used, suggesting a shift in the power structure.",
+            options: [
+              "社会的地位を示す物品が使われなくなったように見え、これは権力構造の変化を示唆している。",
+              "王族の墓から豪華な装飾品が消えたことは、経済的な衰退を如実に表している。",
+              "宗教的な儀式に用いられる道具が一新されたことから、新たな信仰が普及したと考えられる。",
+              "平民の住居から高価な貿易品が見つかったことは、階級制度の撤廃を意味している。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Therefore, some scholars think the civilization's fall may have been sparked by social and political changes.",
+            options: [
+              "そのため、一部の学者はこの文明の崩壊が社会的・政治的な変化によって引き起こされたのではないかと考えている。",
+              "したがって、内部での反乱や内戦がきっかけとなって国力が急速に弱まったと主張する研究者もいる。",
+              "このことから、指導者層の腐敗が住民の不満を招き、社会の崩壊につながったと推測されている。",
+              "それゆえ、隣国との同盟関係が破綻したことが文明滅亡の直接の引き金になったと考えられている。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Others have a different theory.",
+            options: [
+              "他の研究者たちは異なる説を唱えている。",
+              "また別の専門家は、伝染病の流行が原因だと主張している。",
+              "外部からの侵略説を支持する考古学者も少なくない。",
+              "大地震などの自然災害が引き金になったとする説も有力だ。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The region in which the civilization was located was extremely dry.",
+            options: [
+              "その文明が位置していた地域は、極めて乾燥していた。",
+              "その王国が栄えた地帯は、頻繁に河川の氾濫に見舞われる場所だった。",
+              "文明の中心地は、山々に囲まれた非常に寒い高冷地であった。",
+              "その地域は広大な森林に覆われており、農業には適していなかった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Some researchers argue that increasing desertification and other environmentally related factors were responsible for the disappearance of the Oxus society.",
+            options: [
+              "一部の研究者は、進行する砂漠化やその他の環境に関連する要因が、オクサス社会の消滅の原因であったと論じている。",
+              "気候の冷涼化によって農作物の収穫量が激減したことが滅亡の主因だと説明する者もいる。",
+              "大規模な干ばつによって水資源が枯渇し、人々が都市を捨てて移住したと主張されている。",
+              "森林伐採による土壌の流出が農業基盤を破壊したことが、文明崩壊の決定打となったとされる。"
+            ],
+            answer: 0
+          }
+        ]
+      },
+      'E': {
+        title: 'The Nukus Museum of Art',
+        questions: [
+          {
+  en: "Popular cities for international tourists, such as London or Paris, often have world-famous museums.",
+  options: [
+    "ロンドンやパリといった外国人観光客に人気の都市には、しばしば世界的に有名な美術館や博物館がある。",
+    "ロンドンやパリの美術館は、世界中から集められた歴史的遺物を多数所蔵していることで知られる。",
+    "世界的な観光都市では、美術館が地域の経済や文化の中心的な役割を果たしている。",
+    "パリやロンドンのような大都市では、現代アートを展示する専門の美術館が人気を集めている。"
+  ],
+  answer: 0
+},
+          {
+            en: "Nukus, however, is a lesser-known city in a remote area of Uzbekistan.",
+            options: [
+              "しかしながら、ヌクスはウズベキスタンの辺境の地にある、あまり知られていない都市である。",
+              "だがヌクスは、近年急激に観光客を増やしているウズベキスタンの新興都市だ。",
+              "しかしヌクスは古くからシルクロードの中継地点として栄えた歴史ある街である。",
+              "一方、ヌクスはウズベキスタンの首都タシケントから目と鼻の先にある工業都市だ。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Despite the city's smaller tourism industry, the Nukus Museum of Art has one of the world's foremost collections of avant-garde art.",
+            options: [
+              "この都市の観光産業が小規模であるにもかかわらず、ヌクス美術館はアヴァンギャルド（前衛）アートの世界最高峰のコレクションの一つを所蔵している。",
+              "観光客が少ないにもかかわらず、この美術館は古代の金細工のコレクションで世界的に有名だ。",
+              "市の財政が厳しいにもかかわらず、ヌクス美術館はソ連時代の公式アートを豊富に保管している。",
+              "地理的に孤立しているにもかかわらず、海外から多くの芸術家がこの美術館を訪れる。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The museum's founder, Igor Savitsky, assembled his collection in the desert city of Nukus for a good reason.",
+            options: [
+              "美術館の創設者であるイゴール・サヴィツキーが、砂漠の街ヌクスでコレクションを収集したのには正当な理由があった。",
+              "創設者のサヴィツキーは、政府の援助を受けてヌクスに美術館を設立することを決意した。",
+              "サヴィツキーがヌクスを選んだのは、単に彼自身が生れ育った故郷であったからに過ぎない。",
+              "彼がこの地にコレクションを集めたのは、広大な土地を安価に入手できたからであった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Because of the severe political situation at the time, much of the art was banned when Savitsky collected it.",
+            options: [
+              "当時の厳しい政治状況のため、サヴィツキーが収集していた当時、それらの芸術作品の多くは禁止されていた。",
+              "政治的な混乱により、当時の多くの作品が海外へ流出する危機に瀕していた。",
+              "政府による検閲が厳しかったため、現代美術の展覧会を開催することは不可能であった。",
+              "当時は前衛芸術に対する理解が乏しく、作品の多くは破棄される運命にあった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "In fact, only art in the style of Soviet realism was allowed.",
+            options: [
+              "実際、ソビエト・リアリズム（社会主義リアリズム）の様式の芸術だけが許可されていた。",
+              "実のところ、政府が認めた公式の画家による風景画のみが展示を許されていた。",
+              "実際には、宗教的なテーマを扱った伝統的な絵画以外はすべて不法とみなされた。",
+              "事実上、国外の芸術家による作品の持ち込みは全面的に禁止されていた。"
+            ],
+            answer: 0
+          },
+          {
+            en: "However, Savitsky was able to acquire tens of thousands of forbidden works because of his determination and because of Nukus's location.",
+            options: [
+              "しかし、サヴィツキーはその決意とヌクスという立地のおかげで、何万点もの発禁作品を入手することができた。",
+              "しかし、彼は政府の要人と親交があったため、密かに作品を買い取ることができた。",
+              "だがサヴィツキーは莫大な私財を投げ打つことで、収集家たちから作品を買い集めた。",
+              "しかし、ヌクスが秘境であったため、当局の目を盗んで作品を輸入することが容易だった。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Government authorities far away in Tashkent and Moscow were largely unaware of his actions.",
+            options: [
+              "はるか遠くのタシケントやモスクワにいる政府当局は、彼の行動をほとんど知らなかった。",
+              "タシケントやモスクワの官僚たちは、サヴィツキーの活動を黙認していたのが実情だ。",
+              "中央政府はヌクスでの美術品収集を、地方の取るに足らない趣味程度に考えていた。",
+              "首都の当局者たちは、サヴィツキーが密輸を行っているのではないかと疑っていた。"
+            ],
+            answer: 0
+          },
+          {
+            en: "These days, the government recognizes the value of the collection, but managing it effectively in such a location is a challenge.",
+            options: [
+              "今日では政府もこのコレクションの価値を認めているが、そのような場所で効果的に管理することは課題となっている。",
+              "現在では政府の全面的な支援により、美術館の改修と作品の修復が順調に進んでいる。",
+              "近年、政府はこのコレクションを首都の国立美術館に移転させる計画を立てている。",
+              "今日、世界中から研究者が訪れるようになったが、専門知識を持つ学芸員の不足が深刻だ。"
+            ],
+            answer: 0
+          }
+        ]
+      },
+      'F': {
+        title: 'Cutting Grass',
+        questions: [
+          {
+            en: "In many places, it is illegal to let lawns or other grassy areas become overgrown.",
+            options: [
+              "多くの場所で、芝生やその他の草地が伸び放題になるのを放置することは違法である。",
+              "多くの自治体では、個人の敷地内の草刈りの頻度について特に制限を設けていない。",
+              "特定の地域では、環境保護のために一定の高さまで草を伸ばすことが義務付けられている。",
+              "公共の公園で芝生を刈る作業は、専門の業者にしか許可されていない。"
+            ],
+            answer: 0
+          },
+          {
+            en: "However, while most people are striving to reduce their carbon dioxide emissions, mechanical lawn mowers are generally powered by fossil fuels.",
+            options: [
+              "しかし、ほとんどの人々が二酸化炭素排出量の削減に努めている一方で、機械式の芝刈り機は一般的に化石燃料で動いている。",
+              "しかし、電動芝刈り機の普及が進んでいるため、排出ガスの問題は急速に改善しつつある。",
+              "だが、手動の芝刈り機を使用する人は非常に少なく、大半の家でエンジン式が使われている。",
+              "しかしながら、芝生の手入れにかかる燃料費の高騰が、住民にとって大きな負担となっている。"
+            ],
+            answer: 0
+          },
+          {
+            en: "This means property owners often disregard these environmental concerns.",
+            options: [
+              "これは、不動産所有者がこれらの環境上の懸念を無視することがよくあるということを意味している。",
+              "このことは、法律を守るためなら環境への配慮を犠牲にしてもやむを得ないという風潮を生んでいる。",
+              "つまり、土地の所有者は芝刈り機の排気ガスが地球温暖化に与える影響を過小評価している。",
+              "その結果、近隣住民との間で草刈りを巡る騒音トラブルが多発しているのが現状だ。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Now, though, a low-tech solution is catching on in areas across the United States: 'rent-a-goat' services.",
+            options: [
+              "しかし現在、ローテクな解決策が全米の地域で普及しつつある。それが「レンタル山羊」サービスである。",
+              "だが最近、自動で稼働するロボット芝刈り機をレンタルするサービスが普及し始めている。",
+              "しかし現在、地域住民が協力して手作業で除草を行う新しいボランティア活動が広まっている。",
+              "ところが今日、化学薬品を使わない環境に優しい除草剤のレンタルが注目を集めている。"
+            ],
+            answer: 0
+          },
+          {
+            en: "These bring herds of goats to remove excess grass simply by eating it.",
+            options: [
+              "これらはヤギの群れを連れてきて、単に草を食べることで余分な草を除去する。",
+              "ヤギたちは特定の雑草だけを選んで食べるため、必要な芝生を傷つける心配がない。",
+              "ヤギの群れを放牧することで、草刈りと同時に土壌の耕起も行われる仕組みだ。",
+              "これらのサービスはヤギを定期的に巡回させ、草が伸びるのを未然に防ぐ。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The goats are effective at removing unwanted vegetation.",
+            options: [
+              "ヤギは不要な植物を取り除くのに効果的である。",
+              "ヤギは除草機では届かない狭い隙間の草まで綺麗に食べ尽くしてくれる。",
+              "ヤギは有毒な雑草を優先的に食べるため、安全な環境作りにも貢献する。",
+              "ヤギを利用することで、機械を使うよりも作業時間を短縮できることが実証された。"
+            ],
+            answer: 0
+          },
+          {
+            en: "They also have an easy time navigating rough terrain, such as rocky hillsides.",
+            options: [
+              "彼らはまた、岩の多い山腹などの荒れた地形を移動するのもお手の物である。",
+              "足場の悪い傾斜地であっても、ヤギなら滑り落ちることなく安全に作業できる。",
+              "険しい崖のような場所でも、ヤギは平然と登って草を食べることができる。",
+              "彼らは広い平地よりも、障害物の多い複雑な地形を好む習性がある。"
+            ],
+            answer: 0
+          },
+          {
+            en: "Businesses and property owners that have rented goat herds to help maintain their lawns also report increased interest from the community.",
+            options: [
+              "芝生の手入れを助けるためにヤギの群れをレンタルした事業者や不動産所有者は、地域社会からの関心が高まったことも報告している。",
+              "ヤギをレンタルした企業は、手入れ費用を従来より半減させることができたと満足している。",
+              "ヤギを導入した施設では、近隣からの騒音に関する苦情が一切なくなったと報告されている。",
+              "レンタルヤギを利用した自治体は、子供たちの環境教育の場として活用し始めている。"
+            ],
+            answer: 0
+          },
+          {
+            en: "The unusual sight of a herd of goats in locations like city parks can turn them into temporary attractions.",
+            options: [
+              "都市の公園のような場所でのヤギの群れという珍しい光景は、それらを一時的なアトラクションに変えることができる。",
+              "公園にヤギがいる風景は、写真映えするスポットとしてSNS上で話題を呼んでいる。",
+              "普段見かけないヤギの姿は、訪れた観光客を楽しませる絶好のアピールポイントとなる。",
+              "都会の真ん中で放牧を行う取り組みは、メディアでも大きく取り上げられた。"
+            ],
+            answer: 0
+          },
+          {
+            en: "These are popular with local families, who bring their children to watch them work.",
+            options: [
+              "これらは地元の家族連れに人気があり、子供たちを連れてヤギが働く様子を見にやってくる。",
+              "ヤギとのふれあい体験イベントは、週末になると家族連れで大変な賑わいを見せる。",
+              "子供たちはヤギに餌をあげたり触ったりすることで、自然や動物に親しむ機会を得ている。",
+              "地域の家族連れにとって、ヤギの除草作業を見学することが定例の散歩コースになっている。"
+            ],
+            answer: 0
+          }
+        ]
+      }
+    };
+
+    let currentTopicKey = 'A';
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+
+    // 添付していただいたHTMLの音声初期化処理を適用
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = function() {
+        window.speechSynthesis.getVoices();
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      for (const key in quizData) {
+        const el = document.getElementById(`count-${key}`);
+        if (el) {
+          el.innerText = `問題数: ${quizData[key].questions.length}`;
+        }
+      }
+    });
+
+    // 添付いただいたHTMLファイルと同じ音声呼び出し（speakCurrentWord）ロジック
+    function playCurrentAudio() {
+      if (!('speechSynthesis' in window)) return;
+      
+      const txt = currentQuestions[currentIndex].en;
+      window.speechSynthesis.cancel();
+      
+      let u = new SpeechSynthesisUtterance(txt);
+      u.lang = "en-US"; 
+      u.rate = 0.7; // ご指定通り速度を 0.7 に設定
+
+      const voices = window.speechSynthesis.getVoices();
+      const fv = voices.find(v => v.name.includes("Google US English") || v.name.includes("Female") || v.name.includes("Zira"));
+      if (fv) u.voice = fv;
+      
+      window.speechSynthesis.speak(u);
+    }
+
+    function showView(viewId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+      
+      const btnBack = document.getElementById('btnBackHome');
+      if (viewId === 'viewMenu') {
+        btnBack.style.display = 'none';
+      } else {
+        btnBack.style.display = 'flex';
+      }
+    }
+
+    function showMenu() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      showView('viewMenu');
+    }
+
+    document.getElementById('btnBackHome').addEventListener('click', showMenu);
+
+    function startQuiz(topicKey) {
+      currentTopicKey = topicKey;
+      const topic = quizData[topicKey];
+      if (!topic || topic.questions.length === 0) return;
+
+      currentQuestions = [...topic.questions];
+      currentIndex = 0;
+      score = 0;
+
+      document.getElementById('topicIndicator').innerText = `Activity ${topicKey}: ${topic.title}`;
+      showView('viewQuiz');
+      loadQuestion();
+    }
+
+    function retryCurrentQuiz() {
+      startQuiz(currentTopicKey);
+    }
+
+    function loadQuestion() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
+      const q = currentQuestions[currentIndex];
+      const total = currentQuestions.length;
+
+      document.getElementById('questionCounter').innerText = `Q ${currentIndex + 1} / ${total}`;
+      const progressPercent = ((currentIndex) / total) * 100;
+      document.getElementById('progressBar').style.width = `${progressPercent}%`;
+
+      document.getElementById('btnShowOptions').style.display = 'flex';
+      
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.style.display = 'none';
+      optionsContainer.innerHTML = '';
+
+      const optionsWithIndex = q.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+      for (let i = optionsWithIndex.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
+      }
+
+      optionsWithIndex.forEach((optObj) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = optObj.text;
+        btn.onclick = () => handleAnswer(optObj.originalIndex, btn);
+        optionsContainer.appendChild(btn);
+      });
+
+      const scriptBox = document.getElementById('scriptBox');
+      scriptBox.classList.remove('active');
+      document.getElementById('scriptEn').innerText = q.en;
+      document.getElementById('scriptJa').innerText = q.options[q.answer];
+
+      document.getElementById('btnNext').classList.remove('active');
+
+      setTimeout(() => {
+        playCurrentAudio();
+      }, 300);
+    }
+
+    function revealOptions() {
+      document.getElementById('btnShowOptions').style.display = 'none';
+      document.getElementById('optionsContainer').style.display = 'flex';
+    }
+
+    function handleAnswer(selectedIndex, clickedBtn) {
+      const q = currentQuestions[currentIndex];
+      const optionButtons = document.querySelectorAll('.option-btn');
+
+      optionButtons.forEach(btn => btn.disabled = true);
+
+      if (selectedIndex === q.answer) {
+        clickedBtn.classList.add('correct');
+        score++;
+      } else {
+        clickedBtn.classList.add('wrong');
+        optionButtons.forEach(btn => {
+          if (btn.innerText === q.options[q.answer]) {
+            btn.classList.add('correct');
+          }
+        });
+      }
+
+      document.getElementById('scriptBox').classList.add('active');
+      document.getElementById('btnNext').classList.add('active');
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < currentQuestions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('progressBar').style.width = `100%`;
+      document.getElementById('finalScore').innerText = score;
+      document.getElementById('finalTotal').innerText = `/ ${currentQuestions.length}`;
+
+      const percentage = (score / currentQuestions.length) * 100;
+      const titleEl = document.getElementById('summaryTitle');
+      const subEl = document.getElementById('summarySub');
+
+      if (percentage === 100) {
+        titleEl.innerText = "全問正解！完璧です！";
+        subEl.innerText = "このパッセージの英文は完璧に聞き取れています。";
+      } else if (percentage >= 60) {
+        titleEl.innerText = "合格ライン達成！";
+        subEl.innerText = "間違えた文のスクリプトをもう一度確認してみましょう。";
+      } else {
+        titleEl.innerText = "もう一度チャレンジ！";
+        subEl.innerText = "繰り返し聞き込むことで英検準1級の音に慣れていきましょう。";
+      }
+
+      showView('viewResult');
+    }
+  </script>
+</body>
+</html>
